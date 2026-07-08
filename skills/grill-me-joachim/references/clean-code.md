@@ -40,7 +40,9 @@ Alle Punkte in eigenen Worten und für den Review gebündelt. **Vorab (Joachims 
 
 ## Formatierung & Stil
 
-- **Das gehört dem Linter/Formatter, nicht dem menschlichen Review.** Verbrauch hier kein Budget. Findest du viele Stilnits, ist die Empfehlung: Formatter (Spotless/Prettier o. Ä.) + Linter in CI einziehen.
+- **Das gehört dem Linter/Formatter, nicht dem menschlichen Review.** Verbrauch hier kein Budget. Findest du viele Stilnits, ist die Empfehlung: Formatter + Linter in CI einziehen, sodass falsch formatierter Code den Build bricht — Review dreht sich dann um Design, nicht um Leerzeichen.
+  - *JVM-Werkzeugkasten (Beispiele):* **Spotless** (Formatierung, bricht den Build), **Checkstyle/PMD** (Methodengröße, Komplexität, Magic Numbers, `System.out`), **SpotBugs** (leerer `catch`, NPE-Risiken), **ArchUnit** (Architektur-/Injection-Regeln als Test), **JaCoCo** (Coverage-Gate), **maven-enforcer** (verbotene Dependencies). Frontend analog: **ESLint + Prettier**.
+  - *Rollout:* neue Checks erst als Warnung, dann als hartes Gate — sonst wird die bestehende Codebase schlagartig rot. Erstformatierung in einen **eigenen** Commit ("nur Formatierung"), damit die History sauber bleibt.
 - Menschlich relevant bleibt nur *vertikale Nähe/Reihenfolge*: Zusammengehöriges nah beieinander, aufgerufene Funktion unter der aufrufenden.
 
 ## Objekte, Daten & Kopplung
@@ -61,6 +63,20 @@ Alle Punkte in eigenen Worten und für den Review gebündelt. **Vorab (Joachims 
 - Fremd-APIs hinter eine **eigene Schnittstelle** kapseln (Anti-Corruption Layer). Das schützt vor breiter Kopplung an eine Lib und macht Ersetzen/Testen möglich — im Legacy-/Migrationskontext (Strangler Fig) essenziell.
 - **Learning Tests** für neue/aktualisierte Libs: kleine Tests, die *dein* Verständnis der Fremd-API festhalten und Regressionen bei Upgrades fangen.
 
+## Moderne Sprach-Idiome (Stack-spezifisch, hier: Java 17/21+)
+
+Idiome sind Taktiken im Dienst von Klarheit, Immutabilität und Testbarkeit — nicht Selbstzweck. Im JVM-Stack lohnen sich als Default-Praktiken:
+
+- **records** für DTOs/Value Objects statt Getter-Boilerplate — unveränderlich, `equals`/`hashCode`/`toString` gratis. Weniger Code, weniger Fehlerquellen.
+- **Immutability als Default.** `final` Felder, keine Setter, wo nicht nötig. Threadsicher, vorhersehbar, leichter zu testen. Mutabilität ist die *begründete Ausnahme*.
+- **`Optional<T>` statt `null`** als Rückgabe (Brücke zur Fehlerbehandlung oben). `null` durchreichen ist ein Fund.
+- **sealed interfaces + pattern matching im `switch`** statt `instanceof`-Kaskaden — der Compiler erzwingt Vollständigkeit, ein ganzer Bug-Typ ("Fall vergessen") verschwindet.
+- **Konstruktor- statt Field-Injection.** Abhängigkeiten offen sichtbar, ohne Framework/Reflection im Unit-Test instanziierbar, Felder `final`. Field-Injection versteckt Abhängigkeiten und macht Tests künstlich schwer (Brücke zu DIP).
+- **Sichtbarkeit minimieren.** `public` ist eine bewusste Entscheidung, kein Default — jedes `public` ist ein Versprechen (Brücke zu Linse a: kleine Schnittstelle = tiefes Modul). Klassen, die nicht zur Vererbung gedacht sind, `final`.
+- **Plattform-Bordmittel vor zusätzlicher Dependency.** Bevor eine Lib gezogen wird: kann die Standardbibliothek das (Streams, `Optional`, `java.time`, `List.of`)? Das ist die eine Seite des "kein Rad neu erfinden"-Prinzips (SKILL.md) — die *andere* ist: einen etablierten Standard/eine bewährte Lib nicht durch schlechteren Eigenbau ersetzen. Die Abwägung ist immer: verdient diese Dependency ihr Gewicht (CVEs, Wartung, Lernkurve)?
+
+*Für andere Stacks sinngemäß:* das jeweils moderne, idiomatische Mittel des Ökosystems statt veralteter Boilerplate — die *Absicht* (Unveränderlichkeit, Ausdruckskraft, Compiler-Hilfe) überträgt sich.
+
 ## Code-Smells (kuratierte Shortlist fürs Review)
 
 - Lange Parameterlisten → Parameter-Objekt.
@@ -71,10 +87,47 @@ Alle Punkte in eigenen Worten und für den Review gebündelt. **Vorab (Joachims 
 - **Inappropriate Intimacy** → zwei Klassen kennen zu viel voneinander.
 - **Duplicated Code / Dead Code / Magic Numbers** → benannte Konstante, entfernen, DRY (mit obiger Vorsicht).
 - **Speculative Generality** → ungenutzte Flexibilität → entfernen (YAGNI).
+- **Data Clumps** → dieselben paar Felder/Parameter reisen immer zusammen (ein Typ, der geboren werden will) → zu einem Typ bündeln.
+- **Repeated Switches** → dieselbe `switch`/`if`-Kaskade über denselben Typ taucht mehrfach auf → Polymorphie oder eine gemeinsame Map.
+- **Divergent Change** → eine Klasse wird aus mehreren *unzusammenhängenden* Gründen geändert → aufteilen, sodass jedes Modul einen Änderungsgrund hat (Kehrseite von Shotgun Surgery, beides SRP).
 
 ## Testabschnitt (F.I.R.S.T. — Details in engineering-craft.md)
 
 Tests sind erstklassiger Code und werden mit demselben Anspruch reviewt. Kurz: **F**ast, **I**ndependent, **R**epeatable, **S**elf-validating, **T**imely. Für Testpyramide, Test-Doubles, Coverage-Fallen → `references/engineering-craft.md`.
+
+## Worked Examples
+
+**Beispiel 1 — `null` durchreichen + verschluckte Exception (Blocker/Sollte)**
+
+```java
+public User findUser(String id) {
+    try {
+        return repo.load(id);
+    } catch (Exception e) {
+        return null;   // Fehler verschluckt + null als "kein Ergebnis"
+    }
+}
+```
+→ *Warum:* Der `catch` verschluckt jeden Fehler (auch echte, z. B. DB down) und tarnt ihn als "nicht gefunden". `null` wandert zum Aufrufer und wird dort zur NPE — Unknown Unknown (`philosophy-of-software-design.md`).
+→ *Vorschlag:* `Optional<User>` für die legitime Abwesenheit; echte Fehler *werfen* lassen (fail fast mit Kontext), nicht abfangen. Wenn bewusst abgefangen wird, dann kommentiert *warum* und mit spezifischem Exception-Typ.
+
+**Beispiel 2 — Flag-Argument = Funktion tut zwei Dinge (Zur Überlegung/Sollte)**
+
+```java
+void exportReport(Report r, boolean asPdf) {
+    if (asPdf) { /* PDF-Pfad */ } else { /* CSV-Pfad */ }
+}
+```
+→ *Warum:* Das `boolean` verrät, dass die Funktion zwei Dinge tut; der Aufruf `exportReport(r, true)` ist an der Aufrufstelle nicht lesbar (was ist `true`?).
+→ *Vorschlag:* Zwei Funktionen — `exportReportAsPdf(r)` / `exportReportAsCsv(r)` — oder ein `ExportFormat`-Enum, wenn wirklich ein gemeinsamer Rahmen existiert. Command-Query sauber halten.
+
+**Beispiel 3 — Primitive Obsession (Zur Überlegung)**
+
+```java
+void transfer(String fromIban, String toIban, BigDecimal amount, String currency) { ... }
+```
+→ *Warum:* IBAN als `String` (jede Validierung überall aufs Neue), Geld als `BigDecimal` + separatem `currency`-`String` (die zwei können auseinanderlaufen: 100 in welcher Währung?). Lange Parameterliste noch dazu.
+→ *Vorschlag:* Value Objects `Iban` (validiert sich selbst bei Konstruktion) und `Money(amount, currency)` (hält beides zusammen). Signatur wird `transfer(Iban from, Iban to, Money amount)`.
 
 ## Review-Fragen (Checkliste)
 

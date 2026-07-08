@@ -1,6 +1,6 @@
-# Linse (a): Design & Komplexität — nach *A Philosophy of Software Design* (John Ousterhout)
+# Linse (a): Design, Komplexität & Architektur — nach *A Philosophy of Software Design* (John Ousterhout)
 
-*Wann lesen:* wenn es um den großen Schnitt geht — Modulgrenzen, Abstraktionen, Kopplung, ob eine Struktur in sechs Monaten noch tragbar ist. Das ist die wichtigste Linse; die anderen dienen ihr.
+*Wann lesen:* wenn es um den großen Schnitt geht — Modulgrenzen, Abstraktionen, Kopplung, ob eine Struktur in sechs Monaten noch tragbar ist. Das ist die wichtigste Linse; die anderen dienen ihr. Für den **Schnitt der Anwendung als Ganzes** (Schichten/Hexagonal/DDD, Abhängigkeitsrichtung, Domänenmodell) lies zusätzlich den Begleiter `architecture-and-domain.md` — er wendet die hier beschriebene Denkweise auf Architektur und Fachmodell an.
 
 Alle Ideen hier in eigenen Worten zusammengefasst und für den Review-Gebrauch geordnet. Der Leitgedanke des Buches: **Das oberste Ziel guten Designs ist, Komplexität beherrschbar zu halten.** Fast alles andere folgt daraus.
 
@@ -72,6 +72,29 @@ Kommentare sind hier *kein* Eingeständnis von Versagen, sondern erfassen, was C
 ## Kontext-Kalibrierung
 
 Tiefe Module und Information Hiding zahlen sich **am Rand ein, auf den viele bauen** (Plattform-Bibliothek, öffentliche/Team-API, Kern-Domänenmodell) am stärksten aus. Ein Blatt-Modul, das nur an einer Stelle benutzt wird, darf simpler sein. Verlange die volle Design-Strenge dort, wo die Fehlerkosten sich multiplizieren — nicht überall gleich.
+
+## Worked Examples
+
+**Beispiel 1 — Flaches Modul / Pass-Through (Zur Überlegung)**
+
+```java
+public class OrderServiceWrapper {
+    private final OrderService delegate;
+    public Order getOrder(Long id) { return delegate.getOrder(id); }   // reicht nur durch
+    public void save(Order o)      { delegate.save(o); }                // fügt nichts hinzu
+}
+```
+→ *Warum:* Der Wrapper hat eine Schnittstelle, die so komplex ist wie das, was er verbirgt — er kostet mehr (eine Ebene mehr zu verstehen), als er verbirgt (nichts). Classitis, nicht Tiefe.
+→ *Vorschlag:* Löschen und direkt `OrderService` nutzen — *es sei denn*, der Wrapper soll eine echte Entscheidung kapseln (Caching, ACL um Fremdcode). Dann *diese* Entscheidung hineinlegen, sonst hat er keine Existenzberechtigung.
+
+**Beispiel 2 — Information Leakage / Change Amplification (Sollte behoben werden)**
+
+```java
+// An drei Stellen im Code, jeweils hartcodiert:
+if (betrag.compareTo(new BigDecimal("10000")) > 0) { erfordertFreigabe(); }
+```
+→ *Warum:* Dieselbe Fach-Entscheidung (Freigabe-Schwelle) ist an drei Stellen bekannt — ändert sich die Schwelle, musst du alle drei finden (Change Amplification), und eine wird vergessen (Unknown Unknown → Prod-Bug).
+→ *Vorschlag:* Das Wissen an *einer* Stelle kapseln — `Freigaberegel.erfordertFreigabe(Money betrag)`. Die Schwelle lebt einmal, die Aufrufer kennen sie nicht.
 
 ## Review-Fragen (Checkliste)
 
