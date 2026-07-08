@@ -1,6 +1,6 @@
 {
   "name": "@joachimprinzbach/skills",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Joachim Prinzbach's Claude Code skills — reusable engineering disciplines, installable as a plugin or copied into any repo via an init/update CLI.",
   "type": "module",
   "bin": {
