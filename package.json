@@ -1,0 +1,23 @@
+{
+  "name": "@joachimprinzbach/skills",
+  "version": "0.0.0-development",
+  "description": "Joachim Prinzbach's Claude Code skills — reusable engineering disciplines, installable as a plugin or copied into any repo via an init/update CLI.",
+  "type": "module",
+  "bin": {
+    "skills": "cli.mjs"
+  },
+  "scripts": {
+    "test": "node --test \"test/**/*.test.mjs\""
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joachimprinzbach/skills.git"
+  },
+  "license": "UNLICENSED"
+}

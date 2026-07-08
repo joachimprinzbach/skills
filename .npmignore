@@ -1,0 +1,18 @@
+# The npm tarball ships only what `npx skills` needs: cli.mjs, the skills/ tree,
+# package.json, and README. Everything below is dev/release-only.
+# (npm ignores .gitignore once .npmignore exists, so anything to keep out of the
+#  published package must be listed here explicitly.)
+node_modules
+test
+.github
+scripts
+# Plugin/marketplace manifests are distributed via the git marketplace, not the
+# npm package — the CLI consumer installs skills by copying skills/, not these.
+/.claude-plugin
+.releaserc.json
+commitlint.config.mjs
+.nvmrc
+.idea
+*.log
+*.tgz
+.DS_Store

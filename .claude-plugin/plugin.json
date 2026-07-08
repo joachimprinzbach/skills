@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "jp-skills",
+  "displayName": "Joachim's Skills",
+  "version": "0.0.0",
+  "description": "A collection of Claude Code skills — reusable engineering disciplines. Skills auto-discovered under skills/; install the whole set as a plugin, or copy a subset into any repo with the `skills` npx CLI (init/update/list/doctor).",
+  "author": {
+    "name": "Joachim Prinzbach",
+    "email": "Joachim.Prinzbach@baloise.ch"
+  },
+  "homepage": "https://github.com/joachimprinzbach/skills#readme",
+  "repository": "https://github.com/joachimprinzbach/skills",
+  "license": "UNLICENSED",
+  "keywords": ["skills", "code-review", "engineering", "claude-code"]
+}

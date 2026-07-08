@@ -1,0 +1,42 @@
+name: Release
+# Conventional-commits driven release. Runs ONLY on the default branch: on every
+# push/merge to main, semantic-release analyses the commits since the last tag and,
+# if a release is warranted, bumps the version, stamps plugin.json, tags, creates a
+# GitHub Release, and publishes @joachimprinzbach/skills to GitHub Packages. No
+# release-worthy commits -> no publish.
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: write # tags + GitHub releases + commit the stamped plugin.json back
+  issues: write
+  pull-requests: write
+  packages: write # GitHub Packages publish
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          registry-url: "https://npm.pkg.github.com"
+          scope: "@joachimprinzbach"
+      # Gate the release on the CLI suite (dependency-free).
+      - run: node --test "test/**/*.test.mjs"
+      # exec/git plugins aren't bundled with semantic-release, so make them
+      # available to npx (exec stamps plugin.json, git commits it back).
+      - run: npx --yes -p semantic-release@24 -p @semantic-release/exec@7 -p @semantic-release/git@10 semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}

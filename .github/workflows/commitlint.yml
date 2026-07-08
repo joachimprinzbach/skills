@@ -1,0 +1,17 @@
+name: Commitlint
+# semantic-release derives the version from Conventional Commits, so PR commits
+# must follow that format. Lint the commits a PR adds against its base.
+on:
+  pull_request:
+
+jobs:
+  commitlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - run: npx --yes -p @commitlint/cli@19 -p @commitlint/config-conventional@19 commitlint --from "${{ github.event.pull_request.base.sha }}" --to "${{ github.event.pull_request.head.sha }}" --verbose

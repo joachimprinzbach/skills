@@ -1,0 +1,17 @@
+{
+  "name": "jp-skills",
+  "description": "Joachim Prinzbach's Claude Code skills — reusable engineering disciplines, installable as a plugin or copied into any repo via the npx CLI.",
+  "owner": {
+    "name": "Joachim Prinzbach",
+    "email": "Joachim.Prinzbach@baloise.ch"
+  },
+  "plugins": [
+    {
+      "name": "jp-skills",
+      "source": "./",
+      "description": "A growing collection of Claude Code skills. First up: grill-me-joachim — an honest, craft-driven code/design review in Joachim's voice.",
+      "homepage": "https://github.com/joachimprinzbach/skills#readme",
+      "keywords": ["skills", "code-review", "engineering", "claude-code"]
+    }
+  ]
+}
