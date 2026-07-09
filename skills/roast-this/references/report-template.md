@@ -1,4 +1,4 @@
-# Report-Template — die HTML-Seite für `grill-this`
+# Report-Template — die HTML-Seite für `roast-this`
 
 Reine **Darstellung**, keine Prüf-Logik. Dieses Skelett ist der Ausgangspunkt; passe Inhalt und Abschnitte an den konkreten Review an (bei einem kleinen Repo weniger, bei einer Plattform mehr).
 
@@ -7,7 +7,7 @@ Reine **Darstellung**, keine Prüf-Logik. Dieses Skelett ist der Ausgangspunkt; 
 - **Self-contained.** Alles inline: CSS im `<style>`, keine externen Fonts/Skripte/Bilder. Diagramme als ASCII in `<pre>` oder inline-SVG.
 - **Dark + Gold**, im Idiom der bestehenden Orpheus-Seiten (`orpheus-overview.html`, `orpheus-quality-roadmap.html`) — damit die Outputs eine Familie sind. Palette unten.
 - **Responsive.** Relative Einheiten, `max-width`, breite Blöcke (Tabellen, Diagramme) in einen `overflow-x: auto`-Container; der Body scrollt nie horizontal.
-- **Default-Ausgabe:** lokale `.html`-Datei im Arbeitsverzeichnis (z. B. `<projekt>-grill.html`). Will der Nutzer teilen → anbieten, sie als Artifact zu publizieren.
+- **Default-Ausgabe:** lokale `.html`-Datei im Arbeitsverzeichnis (z. B. `<projekt>-roast.html`). Will der Nutzer teilen → anbieten, sie als Artifact zu publizieren.
 - **Cross-Link** zu einer bestehenden Overview-Seite, falls vorhanden (wie sich die Orpheus-Seiten gegenseitig verlinken).
 
 ## Harte Beleg-Regel (nicht verhandelbar)
@@ -44,7 +44,7 @@ Severity → Farbe: Blocker `--red`, Sollte `--orange`, Zur Überlegung `--blue`
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title><PROJEKT> — Grill</title>
+<title><PROJEKT> — Roast</title>
 <style>
   :root{
     --bg:#0d1117;--bg-card:#1c2333;--border:#2d3748;
@@ -123,7 +123,7 @@ Severity → Farbe: Blocker `--red`, Sollte `--orange`, Zur Überlegung `--blue`
     </section>
   </main>
   <footer><div class="wrap">
-    <p><b><PROJEKT> — Grill</b> · Code + Betrieb vereint</p>
+    <p><b><PROJEKT> — Roast</b> · Code + Betrieb vereint</p>
     <p>Stand: <DATUM> · Scope: <N Repos / Modul> · <gh-Fallback-Hinweis falls zutreffend></p>
   </div></footer>
 </body>

@@ -1,4 +1,4 @@
-# Design: `grill-this` — der Orchestrator-Grill (ein Review über Code + Betrieb)
+# Design: `roast-this` — der Orchestrator-Roast (ein Review über Code + Betrieb)
 
 **Datum:** 2026-07-09
 **Status:** Design, zur Review
@@ -6,31 +6,31 @@
 
 ## Problem
 
-Das Grill-Ökosystem trennt Zuständigkeiten sauber und bewusst:
+Das Roast-Ökosystem trennt Zuständigkeiten sauber und bewusst:
 
-- `grill-me-joachim` → das **Code-Artefakt** (tief, geerdet via `datei:zeile`)
-- `grill-my-github` → der **Repo-Betrieb** (Governance, PR-Kultur, Wissens-Hygiene, geerdet via `gh`)
+- `roast-me-joachim` → das **Code-Artefakt** (tief, geerdet via `datei:zeile`)
+- `roast-my-github` → der **Repo-Betrieb** (Governance, PR-Kultur, Wissens-Hygiene, geerdet via `gh`)
 - `check-my-machine` → die lokale Maschine
 
 Diese Trennung ist richtig — jeder Skill bleibt scharf. Aber der **Empfänger eines Reviews will *ein* Review von Joachim**, keinen Stapel aus zwei bis drei separaten Skill-Outputs. Heute muss man die Skills einzeln aufrufen und die Ergebnisse selbst zusammenführen.
 
-Zusätzlich fehlt ein Genre, das keiner der Grills abdeckt: der **System-Überblick** (Landkarte, Datenfluss, Tech-Stack) — Orientierung statt Prüfung. Und es fehlt ein **Breiten-Modus**: nicht jeder Review braucht durchgängige Tiefe; manchmal reicht ein breiter, flacher Blick mit gezielter Tiefe an den Hebelstellen.
+Zusätzlich fehlt ein Genre, das keiner der Roasts abdeckt: der **System-Überblick** (Landkarte, Datenfluss, Tech-Stack) — Orientierung statt Prüfung. Und es fehlt ein **Breiten-Modus**: nicht jeder Review braucht durchgängige Tiefe; manchmal reicht ein breiter, flacher Blick mit gezielter Tiefe an den Hebelstellen.
 
 Referenz-Beispiel für das gewünschte Deliverable: die beiden HTML-Seiten `orpheus-overview.html` und `orpheus-quality-roadmap.html` im Orpheus-Workspace (dark + gold, Scorecard, priorisierte Tiers). Deren Schwachpunkt — weiche, unbelegte Claims — wird hier bewusst vermieden.
 
 ## Entscheidung
 
-Ein neues Skill **`grill-this`**: ein **Orchestrator ohne eigene Review-Logik**, der die scharfen Einzel-Skills als Finder dirigiert und daraus **ein** Joachim-Review in **einer Stimme** synthetisiert — standardmäßig als **teilbare HTML-Seite**.
+Ein neues Skill **`roast-this`**: ein **Orchestrator ohne eigene Review-Logik**, der die scharfen Einzel-Skills als Finder dirigiert und daraus **ein** Joachim-Review in **einer Stimme** synthetisiert — standardmäßig als **teilbare HTML-Seite**.
 
 Verworfene Alternativen:
-- **Alles zurück in `grill-me-joachim` mergen** — macht genau die Verwässerung rückgängig, die der Split (`fix: keep grill-me-joachim strictly a codebase review`) behoben hat.
+- **Alles zurück in `roast-me-joachim` mergen** — macht genau die Verwässerung rückgängig, die der Split (`fix: keep roast-me-joachim strictly a codebase review`) behoben hat.
 - **Nur eine Synthese-Konvention dokumentieren** — automatisiert das „ein Review" nicht; zu dünn für den wiederkehrenden Plattform-Bedarf (Orpheus = 17 Repos).
 
 ## Leitprinzip (schützt die Schärfe der Sub-Skills)
 
-`grill-this` enthält **keine** Review-Kriterien. Keine Code-Smells, keine gh-Rezepte, keine Referenzdateien mit Prüf-Inhalten. Es konsumiert die Sub-Skills **auf ihrer Finder-Ebene** (deren Linsen + Referenzdateien + Groundedness-Regeln) und **ersetzt deren Einzel-Synthese durch eine domänenübergreifende Synthese**. Wächst `grill-this` Prüf-Logik an, ist das ein Design-Fehler — sie gehört in den zuständigen Sub-Skill.
+`roast-this` enthält **keine** Review-Kriterien. Keine Code-Smells, keine gh-Rezepte, keine Referenzdateien mit Prüf-Inhalten. Es konsumiert die Sub-Skills **auf ihrer Finder-Ebene** (deren Linsen + Referenzdateien + Groundedness-Regeln) und **ersetzt deren Einzel-Synthese durch eine domänenübergreifende Synthese**. Wächst `roast-this` Prüf-Logik an, ist das ein Design-Fehler — sie gehört in den zuständigen Sub-Skill.
 
-Konsequenz: `grill-me-joachim` und `grill-my-github` bleiben **unverändert** und einzeln aufrufbar.
+Konsequenz: `roast-me-joachim` und `roast-my-github` bleiben **unverändert** und einzeln aufrufbar.
 
 ## Ablauf
 
@@ -40,8 +40,8 @@ Vier Schritte, plus Rendering: **Scope & kalibrieren → orientieren → über S
 
 - **Scope erkennen:** ein Repo, oder ein Workspace mit vielen Repos (wie der Orpheus-Root mit 17 Unterordnern)? Bei Mehrdeutigkeit eine präzise Frage, sonst Annahme offenlegen.
 - **Zwei Regler setzen:**
-  - **Pragmatismus** (aus den Sub-Skills geerbt): Spike/Prototyp → leichte Hand; interne App → normal; geteilte Plattform / öffentliche API → voller Grill.
-  - **Breite ↔ Tiefe** (neu, orchestrator-eigen): „breit" = Overview + Tiefe nur an den Hebelstellen; „voller Grill" = `datei:zeile` durchgängig. Steuert, wie tief der Code-Grill fächert. Default bei großer Plattform: **breit-zuerst mit gezielter Tiefe**, nicht erschöpfendes `datei:zeile` überall.
+  - **Pragmatismus** (aus den Sub-Skills geerbt): Spike/Prototyp → leichte Hand; interne App → normal; geteilte Plattform / öffentliche API → voller Roast.
+  - **Breite ↔ Tiefe** (neu, orchestrator-eigen): „breit" = Overview + Tiefe nur an den Hebelstellen; „voller Roast" = `datei:zeile` durchgängig. Steuert, wie tief der Code-Roast fächert. Default bei großer Plattform: **breit-zuerst mit gezielter Tiefe**, nicht erschöpfendes `datei:zeile` überall.
 
 ### 2. Orientieren (die Breite)
 
@@ -53,8 +53,8 @@ Bei einem einzelnen kleinen Repo ist dieser Pass leicht (ein Absatz); bei einer 
 
 ### 3. Gathern über die Sub-Skills (Finder-Ebene)
 
-- **Code-Domäne:** der Linsen-Fan-out von `grill-me-joachim` (Design/Architektur, Code-Qualität, Handwerk, Frontend, Wartbarkeit) — kalibriert am Breiten-Regler. Sub-Agenten lesen die jeweilige Referenzdatei aus `grill-me-joachim/references/` und folgen deren Methodik + Groundedness-Regel (`datei:zeile` + Zitat).
-- **Betriebs-Domäne:** das Gathern von `grill-my-github` (Governance & Branch-Schutz, PR-Kultur & Delivery-Flow, Issue-/Wissens-Hygiene) nach `grill-my-github/references/gh-cookbook.md`.
+- **Code-Domäne:** der Linsen-Fan-out von `roast-me-joachim` (Design/Architektur, Code-Qualität, Handwerk, Frontend, Wartbarkeit) — kalibriert am Breiten-Regler. Sub-Agenten lesen die jeweilige Referenzdatei aus `roast-me-joachim/references/` und folgen deren Methodik + Groundedness-Regel (`datei:zeile` + Zitat).
+- **Betriebs-Domäne:** das Gathern von `roast-my-github` (Governance & Branch-Schutz, PR-Kultur & Delivery-Flow, Issue-/Wissens-Hygiene) nach `roast-my-github/references/gh-cookbook.md`.
 - **Bei Plattform-Scope:** beide Domänen laufen über die Repos; Ergebnisse aggregieren.
 
 Der Orchestrator unterdrückt die **Einzel-Synthese** der Sub-Skills — er nutzt nur ihre Finder.
@@ -86,7 +86,7 @@ Der Schwachpunkt der bestehenden Roadmap-HTML (weiche Claims wie „besser als g
 
 ## gh-Fallback (Entscheidung: b)
 
-`grill-my-github` braucht `gh` + Authentifizierung. Fehlt beides (z. B. lokale Klone ohne gh-Zugang, wie im Orpheus-Workspace), **degradiert die Betriebs-Domäne auf lokal-ableitbare git-Signale**, statt sie zu überspringen:
+`roast-my-github` braucht `gh` + Authentifizierung. Fehlt beides (z. B. lokale Klone ohne gh-Zugang, wie im Orpheus-Workspace), **degradiert die Betriebs-Domäne auf lokal-ableitbare git-Signale**, statt sie zu überspringen:
 
 - **Ableitbar aus lokalem git/Dateisystem:** Branch-Anzahl & -Alter (`git for-each-ref --sort=committerdate`), stale-Anteil (>90 Tage), Commit-Kadenz, Autor-Konzentration/Bus-Faktor (`git shortlog -sne` — mit `.mailmap`-Caveat bei Identitäts-Aliasing), Vorhandensein von `.github/workflows/`, `CODEOWNERS`, PR-Templates, `dependabot.yml`/`renovate.json`, READMEs/ADRs.
 - **Nicht ohne gh prüfbar** (transparent als solches markieren, **nicht** erfinden): tatsächliche Branch-Protection-Settings, Required Reviews/Checks, PR-Review-Latenz & -Tiefe, Merge-Strategie-Historie.
@@ -96,7 +96,7 @@ Das Deliverable sagt offen, welche Betriebs-Signale aus lokalem git stammen und 
 ## Dateistruktur des Skills
 
 ```
-skills/grill-this/
+skills/roast-this/
   SKILL.md                       # Orchestrator-Ablauf, Regler, Delegations-Mechanik, Synthese
   references/
     report-template.md           # HTML-Skelett (dark/gold) + "keine unbelegten Aussagen"-Regel
@@ -106,17 +106,17 @@ Keine Prüf-Referenzdateien — die leben in den Sub-Skills. `report-template.md
 
 ## Beziehung zu den Geschwister-Skills
 
-- `grill-this` **dirigiert** `grill-me-joachim` + `grill-my-github`; es dupliziert deren Inhalt nicht.
-- Für ein einzelnes Code-Review ohne Betrieb bleibt `grill-me-joachim` der direkte Weg; für reinen Repo-Betrieb `grill-my-github`. `grill-this` ist die Wahl, wenn **ein** ganzheitliches Review über beides gewünscht ist — besonders bei Plattformen mit mehreren Repos.
+- `roast-this` **dirigiert** `roast-me-joachim` + `roast-my-github`; es dupliziert deren Inhalt nicht.
+- Für ein einzelnes Code-Review ohne Betrieb bleibt `roast-me-joachim` der direkte Weg; für reinen Repo-Betrieb `roast-my-github`. `roast-this` ist die Wahl, wenn **ein** ganzheitliches Review über beides gewünscht ist — besonders bei Plattformen mit mehreren Repos.
 
 ## Non-Goals (YAGNI)
 
 - Kein eigenes Overview-Skill (die Breite lebt als Intro im Review).
-- Keine Änderungen an `grill-me-joachim` / `grill-my-github`.
+- Keine Änderungen an `roast-me-joachim` / `roast-my-github`.
 - Keine schreibenden Aktionen (read-only wie die Sub-Skills; Fixes als Vorschläge/Befehle).
 - Kein Theme-Toggle im HTML (die bestehenden Seiten sind dark-only; wir matchen sie).
 - Kein Cross-Repo-Dependency-Graph o. Ä. — erst wenn ein echter Bedarf auftaucht.
 
 ## Erfolgskriterium
 
-Ein Aufruf von `grill-this` auf dem Orpheus-Workspace liefert **eine** HTML-Seite mit einem Verdikt, einer Landkarte als Intro, einer belegten Scorecard und einer über Code + Betrieb vereinten, priorisierten Fund-Rangfolge — ohne eine einzige unbelegte Aussage, und ohne dass `grill-me-joachim` oder `grill-my-github` dafür angefasst werden mussten.
+Ein Aufruf von `roast-this` auf dem Orpheus-Workspace liefert **eine** HTML-Seite mit einem Verdikt, einer Landkarte als Intro, einer belegten Scorecard und einer über Code + Betrieb vereinten, priorisierten Fund-Rangfolge — ohne eine einzige unbelegte Aussage, und ohne dass `roast-me-joachim` oder `roast-my-github` dafür angefasst werden mussten.

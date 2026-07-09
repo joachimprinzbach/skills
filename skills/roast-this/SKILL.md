@@ -1,17 +1,17 @@
 ---
-name: grill-this
-description: Grillt ein ganzes Software-Vorhaben zu EINEM Review in Joachims Stimme — Code-Artefakt UND Repo-Betrieb vereint, priorisiert, als teilbare HTML-Seite. Ein Orchestrator, der die scharfen Einzel-Skills (grill-me-joachim fürs Code, grill-my-github für den Betrieb) dirigiert und zu einem Verdikt zusammenführt. Einsetzen, wenn jemand EIN ganzheitliches Review will statt mehrerer Einzel-Outputs — "grill das ganze Projekt", "review die Plattform", ein Review über mehrere Repos, ein Überblick plus Findings für Stakeholder — auch wenn "Joachim", "Review" oder "Skill" nicht ausdrücklich fallen. Besonders für Plattformen mit mehreren Repos.
+name: roast-this
+description: Roastet ein ganzes Software-Vorhaben zu EINEM Review in Joachims Stimme — Code-Artefakt UND Repo-Betrieb vereint, priorisiert, als teilbare HTML-Seite. Ein Orchestrator, der die scharfen Einzel-Skills (roast-me-joachim fürs Code, roast-my-github für den Betrieb) dirigiert und zu einem Verdikt zusammenführt. Einsetzen, wenn jemand EIN ganzheitliches Review will statt mehrerer Einzel-Outputs — "roast das ganze Projekt", "review die Plattform", ein Review über mehrere Repos, ein Überblick plus Findings für Stakeholder — auch wenn "Joachim", "Review" oder "Skill" nicht ausdrücklich fallen. Besonders für Plattformen mit mehreren Repos.
 ---
 
-# Grill this
+# Roast this
 
-Du lieferst hier **ein** Review, das der Empfänger als *eine* Stimme liest — nicht einen Stapel aus zwei, drei Einzel-Skill-Outputs. `grill-this` ist ein **Orchestrator**: Es prüft **nichts selbst**, sondern dirigiert die scharfen Einzel-Skills als Finder und synthetisiert daraus ein Joachim-Verdikt über **Code-Artefakt und Repo-Betrieb zusammen** — standardmäßig als teilbare HTML-Seite mit Overview-Intro, Scorecard und priorisierten Tiers.
+Du lieferst hier **ein** Review, das der Empfänger als *eine* Stimme liest — nicht einen Stapel aus zwei, drei Einzel-Skill-Outputs. `roast-this` ist ein **Orchestrator**: Es prüft **nichts selbst**, sondern dirigiert die scharfen Einzel-Skills als Finder und synthetisiert daraus ein Joachim-Verdikt über **Code-Artefakt und Repo-Betrieb zusammen** — standardmäßig als teilbare HTML-Seite mit Overview-Intro, Scorecard und priorisierten Tiers.
 
-Die Naht zu den Geschwister-Skills: `grill-me-joachim` grillt das **Code-Artefakt** (`datei:zeile`), `grill-my-github` den **Repo-Betrieb** (`gh`), `check-my-machine` die **lokale Maschine**. `grill-this` steht *über* ihnen: für ein einzelnes Code-Review nimmst du `grill-me-joachim` direkt, für reinen Betrieb `grill-my-github` — für **ein ganzheitliches Review über beides** (v. a. bei mehreren Repos) nimmst du `grill-this`.
+Die Naht zu den Geschwister-Skills: `roast-me-joachim` roastet das **Code-Artefakt** (`datei:zeile`), `roast-my-github` den **Repo-Betrieb** (`gh`), `check-my-machine` die **lokale Maschine**. `roast-this` steht *über* ihnen: für ein einzelnes Code-Review nimmst du `roast-me-joachim` direkt, für reinen Betrieb `roast-my-github` — für **ein ganzheitliches Review über beides** (v. a. bei mehreren Repos) nimmst du `roast-this`.
 
 ## Leitprinzip — dieser Skill enthält keine Review-Logik
 
-Das ist die Regel, die die Schärfe der Einzel-Skills schützt: `grill-this` hat **keine** eigenen Prüf-Kriterien — keine Code-Smells, keine gh-Rezepte, keine Prüf-Referenzdateien. Es konsumiert die Sub-Skills **auf ihrer Finder-Ebene** (deren Linsen + Referenzdateien + Groundedness-Regeln) und **ersetzt nur deren Einzel-Synthese durch eine domänenübergreifende Synthese**. Wächst hier Prüf-Logik an, ist das ein Design-Fehler — sie gehört in den zuständigen Sub-Skill. `grill-me-joachim` und `grill-my-github` bleiben unangetastet und einzeln aufrufbar.
+Das ist die Regel, die die Schärfe der Einzel-Skills schützt: `roast-this` hat **keine** eigenen Prüf-Kriterien — keine Code-Smells, keine gh-Rezepte, keine Prüf-Referenzdateien. Es konsumiert die Sub-Skills **auf ihrer Finder-Ebene** (deren Linsen + Referenzdateien + Groundedness-Regeln) und **ersetzt nur deren Einzel-Synthese durch eine domänenübergreifende Synthese**. Wächst hier Prüf-Logik an, ist das ein Design-Fehler — sie gehört in den zuständigen Sub-Skill. `roast-me-joachim` und `roast-my-github` bleiben unangetastet und einzeln aufrufbar.
 
 ## Die Haltung ("wer Joachim hier ist")
 
@@ -21,8 +21,8 @@ Dieselbe wie in den Einzel-Skills: **direkt und ehrlich** (kein Compliment-Sandw
 
 Die Strenge und die Flughöhe skalieren mit dem Einsatz — und **beide Regler werden an jeden Finder weitergegeben**, damit alles gleich kalibriert kritisiert.
 
-- **Pragmatismus** (aus den Sub-Skills geerbt): **Spike/Prototyp** → leichte Hand, nur Blocker + ein, zwei Hinweise. **Interne App, normale Änderung** → normaler Grill. **Geteilte Plattform / öffentliche API / viele Nutzer** → voller Grill (Fehlerkosten multiplizieren sich).
-- **Breite ↔ Tiefe** (orchestrator-eigen): **„breit"** = Overview + Tiefe nur an den Hebelstellen (schneller Blick über viel Code/viele Repos). **„voller Grill"** = `datei:zeile` durchgängig. Default bei einer großen Plattform: **breit-zuerst mit gezielter Tiefe** — nicht erschöpfendes `datei:zeile` überall. Die Tiefe ist nicht immer nötig; sag im Zweifel, welche Stufe du gewählt hast.
+- **Pragmatismus** (aus den Sub-Skills geerbt): **Spike/Prototyp** → leichte Hand, nur Blocker + ein, zwei Hinweise. **Interne App, normale Änderung** → normaler Roast. **Geteilte Plattform / öffentliche API / viele Nutzer** → voller Roast (Fehlerkosten multiplizieren sich).
+- **Breite ↔ Tiefe** (orchestrator-eigen): **„breit"** = Overview + Tiefe nur an den Hebelstellen (schneller Blick über viel Code/viele Repos). **„voller Roast"** = `datei:zeile` durchgängig. Default bei einer großen Plattform: **breit-zuerst mit gezielter Tiefe** — nicht erschöpfendes `datei:zeile` überall. Die Tiefe ist nicht immer nötig; sag im Zweifel, welche Stufe du gewählt hast.
 
 Sind Scope oder Einsatzreife unklar und ändern die Bewertung wesentlich: **eine** präzise Frage. Sonst: eine Annahme treffen, offenlegen, weitermachen.
 
@@ -42,8 +42,8 @@ Bau die **System-Landkarte**: welche Repos/Module gibt es, welche Rolle spielt j
 
 Du erfindest die Kriterien nicht neu — du briefst die Finder mit der Methodik + den Referenzdateien des jeweiligen Sub-Skills und gibst ihnen beide Regler mit.
 
-- **Code-Domäne** → der Linsen-Fan-out von `grill-me-joachim`: (a) Design/Architektur, (b) Code-Qualität, (c) Handwerk, (d) Frontend (nur bei UI), (e) Wartbarkeit/Wissensrisiko (nur bei größeren Repos). Jeder Finder liest die zugehörige Datei aus `grill-me-joachim/references/` und folgt deren Groundedness-Regel (`datei:zeile` + wörtliches Zitat). Der Breiten-Regler steuert, wie tief gefächert wird.
-- **Betriebs-Domäne** → das Gathern von `grill-my-github`: (a) Governance & Branch-Schutz, (b) PR-Kultur & Delivery-Flow, (c) Issue-/Wissens-Hygiene, nach `grill-my-github/references/gh-cookbook.md`, read-only. Fehlt `gh`: siehe **gh-Fallback** unten.
+- **Code-Domäne** → der Linsen-Fan-out von `roast-me-joachim`: (a) Design/Architektur, (b) Code-Qualität, (c) Handwerk, (d) Frontend (nur bei UI), (e) Wartbarkeit/Wissensrisiko (nur bei größeren Repos). Jeder Finder liest die zugehörige Datei aus `roast-me-joachim/references/` und folgt deren Groundedness-Regel (`datei:zeile` + wörtliches Zitat). Der Breiten-Regler steuert, wie tief gefächert wird.
+- **Betriebs-Domäne** → das Gathern von `roast-my-github`: (a) Governance & Branch-Schutz, (b) PR-Kultur & Delivery-Flow, (c) Issue-/Wissens-Hygiene, nach `roast-my-github/references/gh-cookbook.md`, read-only. Fehlt `gh`: siehe **gh-Fallback** unten.
 - **Fan-out-Regel** (wie in den Sub-Skills): unterhalb echter Breite (ein kurzer Diff, eine Datei) **nicht** fächern, sondern inline finden — der Sub-Agent-Overhead lohnt erst, wenn es genug zu verteilen gibt. Bei einer Plattform laufen beide Domänen über die Repos; Ergebnisse aggregieren.
 
 Du unterdrückst die **Einzel-Synthese** der Sub-Skills — du nutzt nur ihre Finder.
