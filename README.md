@@ -10,6 +10,7 @@ is a skill.
 | Skill | What it does |
 |---|---|
 | [`grill-me-joachim`](./skills/grill-me-joachim/SKILL.md) | An honest, craft-driven code/design review in Joachim's voice — Ousterhout design + architecture/domain modelling, Clean Code, engineering craft (interfaces, testing, docs, DevOps, VCS hygiene), Angular frontends and maintainability/knowledge-risk signals (bus factor, recorded decisions). Fans out one grounded finder per lens, then synthesises calibrated, prioritised findings — with a bit of humour. |
+| [`grill-my-github`](./skills/grill-my-github/SKILL.md) | An honest review of how a GitHub repo is *run* (not the code) in Joachim's voice — governance & branch protection, PR culture & delivery flow, issue & knowledge hygiene. Read-only via `gh`, every finding grounded in a concrete `gh` output, calibrated to the repo's stakes, with copy-paste fixes the human runs. |
 | [`check-my-machine`](./skills/check-my-machine/SKILL.md) | Checks whether the machine is ready for agentic coding — git, gh, node/npm, Claude CLI and Python/uv installed, up to date (against latest) and sensibly configured. Cross-platform, diagnose-only, with copy-paste fixes per OS. |
 
 ## Install as a Claude Code plugin
