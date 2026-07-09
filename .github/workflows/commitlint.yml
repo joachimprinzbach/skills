@@ -14,4 +14,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "24"
-      - run: npx --yes -p @commitlint/cli@19 -p @commitlint/config-conventional@19 commitlint --from "${{ github.event.pull_request.base.sha }}" --to "${{ github.event.pull_request.head.sha }}" --verbose
+      # Install into ./node_modules (not package.json) so commitlint can resolve
+      # the `extends: @commitlint/config-conventional` from the repo root. With
+      # `npx -p` the shareable config lands in a temp prefix that resolve-extends
+      # can't see from cwd, which fails with MODULE_NOT_FOUND.
+      - run: npm install --no-save @commitlint/cli@19 @commitlint/config-conventional@19
+      - run: npx commitlint --from "${{ github.event.pull_request.base.sha }}" --to "${{ github.event.pull_request.head.sha }}" --verbose
