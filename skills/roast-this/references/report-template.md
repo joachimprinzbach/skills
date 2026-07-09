@@ -19,7 +19,7 @@ Reine **Darstellung**, keine Prüf-Logik. Dieses Skelett ist der Ausgangspunkt; 
 1. **Header + Verdikt** — 1–2 ehrliche Sätze mit Persönlichkeit. Wo etwas dringend dran ist, unmissverständlich.
 2. **Overview / Landkarte** (das Intro) — was ist das System, welche Repos/Rollen, Datenfluss (Diagramm bei Plattform), Tech-Stack. Bei kleinem Repo: ein Absatz.
 3. **Scorecard** — die Kern-Signale auf einen Blick, jede Kachel mit Beleg und Ampel (rot/orange/grün).
-4. **Priorisierte Tiers** — Blocker → Sollte → Zur Überlegung → Nit, über **beide** Domänen vereint. Jeder Fund: **Was** (Beleg) → **Warum** (Prinzip/Domäne) → **Vorschlag**.
+4. **Priorisierte Tiers** — Blocker → Sollte → Zur Überlegung → Nit, über **beide** Domänen vereint. Jeder Fund: **Was** (Beleg) → **Warum** (Prinzip/Domäne) → **Vorschlag**. Ein urteilender Tier trägt max. ~5 flache Einträge (Signal-Deckel, siehe SKILL.md §4) — verwandte Funde als *ein* Thema mit einem Titel bündeln, die Fundstellen darunter.
 5. **Was gut ist** — ehrlich, konkret.
 6. **Footer** — Stand, Scope, gh-Fallback-Hinweis falls zutreffend („Betriebs-Signale aus lokalem git; Branch-Protection ohne gh nicht geprüft").
 

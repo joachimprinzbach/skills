@@ -52,7 +52,8 @@ Du unterdrückst die **Einzel-Synthese** der Sub-Skills — du nutzt nur ihre Fi
 
 - **Dedup über die Domänen:** derselbe Sachverhalt aus zwei Quellen = ein Fund mit zwei Blickwinkeln (z. B. „keine ADRs" aus Code-Wartbarkeit *und* GitHub-Wissenshygiene).
 - **Final kalibrieren** gegen die Regler — nicht gegen ein Ideal.
-- **Ehrlich priorisieren über beide Domänen** in **eine** Rangfolge. Führe mit den zwei, drei Dingen, die wirklich zählen; ertränke das Signal nicht.
+- **Ehrlich priorisieren über beide Domänen** in **eine** Rangfolge. Führe mit den zwei, drei Dingen, die wirklich zählen.
+- **Signal-Deckel (nicht verhandelbar).** Kein urteilender Tier — vor allem „Sollte behoben werden" — trägt mehr als **~5 flache Einträge**. Wird er länger, ist das kein Zeichen von Gründlichkeit, sondern von fehlender Disziplin: dann **gruppieren statt auflisten**. Bündle verwandte Funde zu *einem* Thema mit einem Titel (z. B. „CI-Hygiene: `adopt`-EOL + kein PR-Merge-Gate + falscher Branch-Filter" als ein Eintrag, die Fundstellen darunter), und schieb die schwächsten nach unten oder falte sie in einen kompakten „weitere Punkte"-Sammeleintrag. Faustregel: Ein Report, in dem neun gleichgewichtige Punkte um Aufmerksamkeit kämpfen, hat kein Signal mehr — nur eine Liste. Deckle, bündle, führe.
 - **Benenne, was *gut* ist** — ehrlich und konkret.
 - Bei Plattform-Scope: Plattform-weite Themen **und** Repo-spezifische Fundstellen unterscheiden.
 - **Eine Stimme, ein Verdikt** — die Finder dürfen unterschiedlich geklungen haben; die Ausgabe klingt einheitlich nach Joachim.
