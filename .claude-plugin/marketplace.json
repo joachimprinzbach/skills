@@ -9,7 +9,7 @@
     {
       "name": "jp-skills",
       "source": "./",
-      "description": "A growing collection of Claude Code skills. First up: grill-me-joachim — an honest, craft-driven code/design review in Joachim's voice.",
+      "description": "A growing collection of Claude Code skills. First up: roast-me-joachim — an honest, craft-driven code/design review in Joachim's voice.",
       "homepage": "https://github.com/joachimprinzbach/skills#readme",
       "keywords": ["skills", "code-review", "engineering", "claude-code"]
     }

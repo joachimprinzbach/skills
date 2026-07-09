@@ -1,4 +1,4 @@
-# Design: `grill-my-github` — GitHub-Repo-Review in Joachims Stimme
+# Design: `roast-my-github` — GitHub-Repo-Review in Joachims Stimme
 
 Datum: 2026-07-09
 Status: akzeptiert (brainstorming abgeschlossen)
@@ -6,19 +6,19 @@ Status: akzeptiert (brainstorming abgeschlossen)
 ## Zweck & Naht
 
 Ein neuer Skill in der Collection, der **nicht den Code**, sondern **wie das Repo
-als Engineering-Betrieb geführt wird** grillt — Governance, Delivery-Flow,
+als Engineering-Betrieb geführt wird** roastet — Governance, Delivery-Flow,
 Wissens-Hygiene. Datenquelle: `gh` (GitHub CLI), **strikt read-only**.
 
 Saubere Trennung zu den Geschwistern:
 
-| Skill | Grillt | Datenquelle |
+| Skill | Roastet | Datenquelle |
 |---|---|---|
-| `grill-me-joachim` | das Code-Artefakt (Design, Qualität, Craft) | Dateiinhalte |
-| `grill-my-github` | den Repo-Betrieb (Governance, Flow, Hygiene) | `gh` API/CLI |
+| `roast-me-joachim` | das Code-Artefakt (Design, Qualität, Craft) | Dateiinhalte |
+| `roast-my-github` | den Repo-Betrieb (Governance, Flow, Hygiene) | `gh` API/CLI |
 | `check-my-machine` | die lokale Maschine (Tool-Readiness) | lokale Shell |
 
-Der letzte Commit an `grill-me-joachim` hielt dieses bewusst *strikt auf die
-Codebase* begrenzt. `grill-my-github` füllt die komplementäre Hälfte.
+Der letzte Commit an `roast-me-joachim` hielt dieses bewusst *strikt auf die
+Codebase* begrenzt. `roast-my-github` füllt die komplementäre Hälfte.
 
 ## Blickwinkel
 
@@ -30,14 +30,14 @@ von Governance mitgenommen, ohne eine volle Security-Lens aufzumachen.
 
 ## Haltung
 
-Erbt Joachims Stimme aus `grill-me-joachim` (direkt & ehrlich, pragmatisch,
+Erbt Joachims Stimme aus `roast-me-joachim` (direkt & ehrlich, pragmatisch,
 handwerklich, lehrend nicht nur prüfend, Humor an / Weichzeichner aus,
 prinzipientreu nicht dogmatisch) — plus zwei skill-spezifische Leitplanken:
 
 - **Groundedness-via-gh (nicht verhandelbar).** Jedes Finding hängt an einer
   **konkreten `gh`-Ausgabe**: ein Setting-Wert, eine PR-/Issue-Nummer, eine
   Zahl, ein Datum. Kein Beleg → kein Finding. Das ist das Äquivalent zur
-  `datei:zeile`+Zitat-Regel von `grill-me-joachim` und der Haupt-Killer gegen
+  `datei:zeile`+Zitat-Regel von `roast-me-joachim` und der Haupt-Killer gegen
   schwammige/halluzinierte Aussagen ("die Review-Kultur wirkt schwach" ist
   verboten, "PR #142 wurde 4 Minuten nach Öffnung ohne Kommentar gemerged" ist
   erlaubt).
@@ -57,8 +57,8 @@ Solo-Prototyp-Repo mit "fehlende Required Reviews" voll:
 
 - **Solo-/Wegwerf-/Personal-Repo** → leichte Hand. Branch Protection bei einem
   Ein-Personen-Repo ist Theater; nur echte Blocker plus ein, zwei Hinweise.
-- **Team-Repo, normal** → normaler Grill.
-- **Geteilte Plattform / viele Nutzer / öffentlich** → voller Grill; hier zahlt
+- **Team-Repo, normal** → normaler Roast.
+- **Geteilte Plattform / viele Nutzer / öffentlich** → voller Roast; hier zahlt
   Governance-Sorgfalt am meisten, weil Fehlerkosten sich über alle Nutzer
   multiplizieren.
 
@@ -67,7 +67,7 @@ präzise Frage. Sonst: Annahme treffen, offenlegen, weitermachen.
 
 ## Ablauf (leichte Struktur)
 
-Bewusst **kein** voller Sub-Agent-Fan-out wie bei `grill-me-joachim` — die
+Bewusst **kein** voller Sub-Agent-Fan-out wie bei `roast-me-joachim` — die
 gh-Daten sind gebunden und passen meist in einen Kontext.
 
 1. **Scope & kalibrieren** — Repo erkennen (`gh repo view`), Einsatzreife
@@ -76,7 +76,7 @@ gh-Daten sind gebunden und passen meist in einen Kontext.
 2. **Gather** — read-only `gh`-Signale pro Lens einsammeln (konkrete Befehle in
    `references/gh-cookbook.md`).
 3. **Urteilen** — inline über die 3 Lenses. **Nur bei echter Breite** (viele
-   offene PRs/Issues) an Sub-Agenten fächern — dieselbe Regel wie bei grill:
+   offene PRs/Issues) an Sub-Agenten fächern — dieselbe Regel wie bei roast:
    unterhalb echter Breite lohnt der Overhead nicht.
 4. **Als Joachim synthetisieren** — deduplizieren, gegen den Regler final
    kalibrieren, ehrlich priorisieren (führe mit den 2–3 Dingen die zählen),
@@ -97,11 +97,11 @@ gh-Daten sind gebunden und passen meist in einen Kontext.
 
 ## Schweregrade
 
-Gleiche Skala wie `grill-me-joachim`, gegen den Regler kalibriert:
+Gleiche Skala wie `roast-me-joachim`, gegen den Regler kalibriert:
 
 - **Blocker** — z. B. `main` ohne jeden Schutz auf einem geteilten Plattform-
   Repo, direkte Push-Rechte für alle auf einem produktiven Default-Branch.
-  (Secrets im Repo o. ä. gehört zum Code-Grill, nicht hierher.)
+  (Secrets im Repo o. ä. gehört zum Code-Roast, nicht hierher.)
 - **Sollte behoben werden** — echte Betriebsschuld, die absehbar beißt (keine
   Required Reviews im Team-Repo, chronisch riesige PRs, tote Branches en masse).
 - **Zur Überlegung** — Abwägungssache (Merge- vs. Squash-Strategie); Trade-off
@@ -111,7 +111,7 @@ Gleiche Skala wie `grill-me-joachim`, gegen den Regler kalibriert:
 
 ## Ausgabeformat
 
-Wie grill — HighLevel-Findings zuerst, dann Details:
+Wie roast — HighLevel-Findings zuerst, dann Details:
 
 ```
 ## Verdikt
@@ -149,7 +149,7 @@ bleiben.
 
 ## Housekeeping
 
-- README-Tabelle um `grill-my-github` ergänzen.
+- README-Tabelle um `roast-my-github` ergänzen.
 - CLI/Plugin entdecken den Skill automatisch über `skills/<name>/SKILL.md` —
   kein Code zu ändern.
 - Release via Conventional Commit (`feat:`).

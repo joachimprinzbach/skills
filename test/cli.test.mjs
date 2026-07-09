@@ -36,9 +36,9 @@ test("parseDescription: returns '' when no frontmatter", () => {
   assert.equal(parseDescription("# Just a body"), "");
 });
 
-test("discoverSkills: finds the bundled grill-me-joachim skill", () => {
+test("discoverSkills: finds the bundled roast-me-joachim skill", () => {
   const names = discoverSkills().map((s) => s.name);
-  assert.ok(names.includes("grill-me-joachim"), `expected grill-me-joachim in ${names.join(", ")}`);
+  assert.ok(names.includes("roast-me-joachim"), `expected roast-me-joachim in ${names.join(", ")}`);
 });
 
 test("discoverSkills: ignores dirs without a SKILL.md and _-prefixed dirs", () => {
@@ -60,14 +60,14 @@ test("init: creates skills, then is idempotent (skips on second run)", () => {
   const root = tmp();
   try {
     const first = init(root);
-    const grill = first.skills.find((s) => s.name === "grill-me-joachim");
-    assert.equal(grill.action, "created");
-    assert.ok(existsSync(join(root, ".claude", "skills", "grill-me-joachim", "SKILL.md")));
+    const roast = first.skills.find((s) => s.name === "roast-me-joachim");
+    assert.equal(roast.action, "created");
+    assert.ok(existsSync(join(root, ".claude", "skills", "roast-me-joachim", "SKILL.md")));
     // references travel with the skill directory
-    assert.ok(existsSync(join(root, ".claude", "skills", "grill-me-joachim", "references")));
+    assert.ok(existsSync(join(root, ".claude", "skills", "roast-me-joachim", "references")));
 
     const second = init(root);
-    assert.equal(second.skills.find((s) => s.name === "grill-me-joachim").action, "skipped");
+    assert.equal(second.skills.find((s) => s.name === "roast-me-joachim").action, "skipped");
   } finally {
     rmSync(root, { recursive: true, force: true });
   }
@@ -78,7 +78,7 @@ test("update: overwrites an existing skill", () => {
   try {
     init(root);
     const res = update(root);
-    assert.equal(res.skills.find((s) => s.name === "grill-me-joachim").action, "updated");
+    assert.equal(res.skills.find((s) => s.name === "roast-me-joachim").action, "updated");
   } finally {
     rmSync(root, { recursive: true, force: true });
   }
@@ -96,8 +96,8 @@ test("copySkills: --only unknown skill throws (no silent skip)", () => {
 test("copySkills: --only restricts to the named skill", () => {
   const root = tmp();
   try {
-    const res = copySkills(root, { only: ["grill-me-joachim"] });
-    assert.deepEqual(res.map((r) => r.name), ["grill-me-joachim"]);
+    const res = copySkills(root, { only: ["roast-me-joachim"] });
+    assert.deepEqual(res.map((r) => r.name), ["roast-me-joachim"]);
   } finally {
     rmSync(root, { recursive: true, force: true });
   }
