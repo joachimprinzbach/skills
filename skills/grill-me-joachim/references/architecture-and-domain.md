@@ -20,7 +20,6 @@ Der universelle Fund, unabhängig vom Stil: **Abhängigkeiten zeigen nach innen.
 - **Ein Modul = ein Änderungsgrund** (SRP auf Modulebene, `clean-code.md`). Ändert sich ein Modul aus mehreren unzusammenhängenden Gründen, ist der Schnitt falsch (Divergent Change).
 - **Fan-in/Fan-out bewusst, keine Zyklen.** Zyklische Modulabhängigkeiten sind ein Fund — sie machen Module untrennbar und Änderungen unvorhersehbar.
 - **Grenzen als Test erzwingen:** `ArchUnit` hält erlaubte Abhängigkeitsrichtung und Zyklenfreiheit grün (Toolchain: `clean-code.md`).
-- **Conway's Law im Blick:** Team- und Systemschnitt spiegeln sich. Ein verflochtener Schnitt hat oft eine organisatorische Ursache — domänen-geschnittene Teams erzeugen modulare Systeme, technisch/zufällig geschnittene einen Monolithen (Team-Seite: `ways-of-working.md`).
 
 ### 2. Fit statt Mode
 
