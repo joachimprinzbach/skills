@@ -14,6 +14,14 @@ Der universelle Fund, unabhängig vom Stil: **Abhängigkeiten zeigen nach innen.
 - **Abstraktionen gehören dem Kern, Implementierungen dem Rand.** Das Interface (`OrderRepository`) lebt in der Domäne, die Implementierung (`JpaOrderRepository`) im Infrastruktur-Ring (DIP, siehe `clean-code.md`).
 - **Nähte sichtbar machen.** Wo die neue Welt an Legacy/Fremdsysteme grenzt: Anti-Corruption Layer (siehe `engineering-craft.md` und `clean-code.md`) — die Naht, an der der Kern sauber bleibt.
 
+**Qualität des Schnitts (deployment-agnostisch).** Modularer Monolith *und* Microservices sind beide legitim — bewertet wird die **Qualität des Schnitts**, nie die Deployment-Topologie:
+
+- **Hohe Kohäsion innen, niedrige Kopplung außen.** Was fachlich zusammengehört, liegt zusammen; über die Grenze fließt wenig und nur Bewusstes.
+- **Ein Modul = ein Änderungsgrund** (SRP auf Modulebene, `clean-code.md`). Ändert sich ein Modul aus mehreren unzusammenhängenden Gründen, ist der Schnitt falsch (Divergent Change).
+- **Fan-in/Fan-out bewusst, keine Zyklen.** Zyklische Modulabhängigkeiten sind ein Fund — sie machen Module untrennbar und Änderungen unvorhersehbar.
+- **Grenzen als Test erzwingen:** `ArchUnit` hält erlaubte Abhängigkeitsrichtung und Zyklenfreiheit grün (Toolchain: `clean-code.md`).
+- **Conway's Law im Blick:** Team- und Systemschnitt spiegeln sich. Ein verflochtener Schnitt hat oft eine organisatorische Ursache — domänen-geschnittene Teams erzeugen modulare Systeme, technisch/zufällig geschnittene einen Monolithen (Team-Seite: `ways-of-working.md`).
+
 ### 2. Fit statt Mode
 
 Passt der Aufwand zur Komplexität der Domäne? Architektur ist eine Investition, die sich erst ab einer gewissen Komplexität auszahlt.
@@ -80,6 +88,7 @@ class BatchImport   { void importieren(Police p, ...) { if (p.getStatus() != AKT
 
 - Zeigen die Abhängigkeiten nach innen — oder kennt die Fachlogik Framework/ORM/Broker?
 - Passt der architektonische Aufwand zur Komplexität *dieser* Ecke (Kern vs. Support)? Over- oder Under-Engineering?
+- Ist der Schnitt kohäsiv innen, lose gekoppelt außen und zyklenfrei — unabhängig von der Deployment-Topologie?
 - Ist *ein* Muster konsistent durchgezogen, oder kocht jede Ecke ihr eigenes?
 - Welche Qualitätsziele treiben die Architektur — und ist eine folgenreiche, teuer umkehrbare Entscheidung mit sichtbarer Trade-off-Begründung (ADR) versehen?
 - Spricht der Code die Sprache der Fachexperten (Ubiquitous Language) — konsistent über Code, Ticket, Gespräch?

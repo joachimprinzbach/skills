@@ -22,6 +22,7 @@ Alle Punkte in eigenen Worten und für den Review gebündelt. **Vorab (Joachims 
 - **Command-Query-Separation:** eine Funktion *tut* etwas oder *beantwortet* etwas, nicht beides.
 - **Keine versteckten Nebenwirkungen.** Was der Name nicht ankündigt, soll nicht passieren.
 - **DRY** — Duplikation ist ein Hauptfeind. *Aber:* voreiliges Wegabstrahieren zufälliger Ähnlichkeit ("false DRY") kann Kopplung erzeugen, die schlimmer ist als die Duplikation. Erst prüfen, ob es dieselbe *Entscheidung* ist oder nur zufällig gleicher Code.
+- **KISS** — die einfachste Lösung, die das Problem *heute* löst; jede zusätzliche Komplexität muss sich rechtfertigen. Cleverness ist kein Selbstzweck, Klarheit schlägt Raffinesse. Das ist Ousterhouts Leitstern „Komplexität senken" auf Funktionsebene (Prinzip-Ebene: SKILL.md).
 
 ## Fehlerbehandlung
 
@@ -49,6 +50,7 @@ Alle Punkte in eigenen Worten und für den Review gebündelt. **Vorab (Joachims 
 
 - **Objekte vs. Datenstrukturen:** Objekte verbergen Daten und exponieren Verhalten; Datenstrukturen exponieren Daten und haben kein Verhalten. Mischformen ("hybrid") sind ein Smell.
 - **Law of Demeter / "tell, don't ask":** nicht durch Objektketten durchgreifen (`a.getB().getC().doThing()`) — das koppelt an die innere Struktur. Sag dem direkten Kollaborateur, was zu tun ist.
+- **Kohäsion als Kriterium (konzeptionell, nicht metrik-dogmatisch):** Gehören die Dinge in einer Klasse/einem Modul wirklich zusammen, oder ist es ein Sammelsurium? Niedrige Kohäsion ist ein Aufteilungssignal — auf Modulebene der Schnitt selbst (`architecture-and-domain.md`). Jage keine Kohäsions-Metrik; das Urteil zählt.
 
 ## SOLID (angewandt, nicht akademisch)
 

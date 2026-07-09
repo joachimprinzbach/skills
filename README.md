@@ -9,7 +9,7 @@ is a skill.
 
 | Skill | What it does |
 |---|---|
-| [`grill-me-joachim`](./skills/grill-me-joachim/SKILL.md) | An honest, craft-driven code/design review in Joachim's voice — Ousterhout design + architecture/domain modelling, Clean Code, engineering craft (interfaces, testing, docs, DevOps, VCS hygiene) and Angular frontends. Fans out one grounded finder per lens, then synthesises calibrated, prioritised findings (Blocker / Sollte / Zur Überlegung / Nit). |
+| [`grill-me-joachim`](./skills/grill-me-joachim/SKILL.md) | An honest, craft-driven code/design review in Joachim's voice — Ousterhout design + architecture/domain modelling, Clean Code, engineering craft (interfaces, testing, docs, DevOps, VCS hygiene), Angular frontends and engineering culture (bus factor, review culture, Conway's Law). Fans out one grounded finder per lens, then synthesises calibrated, prioritised findings (Blocker / Sollte / Zur Überlegung / Nit). |
 | [`check-my-machine`](./skills/check-my-machine/SKILL.md) | Checks whether the machine is ready for agentic coding — git, gh, node/npm, Claude CLI and Python/uv installed, up to date (against latest) and sensibly configured. Cross-platform, diagnose-only, with copy-paste fixes per OS. |
 
 ## Install as a Claude Code plugin
