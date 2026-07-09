@@ -100,6 +100,7 @@ Grundregel im Konflikt: **Ousterhouts "Komplexität senken" ist der Leitstern**,
 
 ## Ausgabeformat (Standard — an die Größe des Reviews anpassen)
 
+Wichtig ist: Immer zuerst die HighLevel findings, bevor CodeBeispiele kommen.
 Bei einem kleinen Review (eine Datei, ein kurzer Diff) reichen ein Verdikt und die relevanten Punkte in Prosa. Bei einem größeren nutze die volle Struktur:
 
 ```
