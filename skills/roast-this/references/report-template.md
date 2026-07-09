@@ -43,16 +43,19 @@ Daten-Balken (kühl):   --data:#2a78d6   --data-deep:#1c5cab
 Status:  --critical:#d03b3b  --serious:#ec835a  --warning:#fab219  --good:#0ca30c  --nit/muted:#8a877f
 ```
 
-## Abschnitte (in dieser Reihenfolge)
+## Abschnitte (feste Reihenfolge — High-Level zuerst, Findings zuletzt)
+
+**Der Bericht öffnet IMMER mit der High-Level-Bewertung (positiv *und* negativ) plus der Prinzip-Einstufung; die konkreten Findings kommen erst danach.**
 
 1. **Header** — Kicker (Ember-„Roast"-Tag), Subject (Repo/Modul, mono), **Verdikt als Headline** (kurze ehrliche These) + Verdikt-Absatz, Meta-Zeile (Stand · Scope · Kalibrierung · Betrieb-Quelle).
-2. **Summary-Band** — Severity-Verteilung (stacked bar, Counts + Legende) neben Findings-nach-Domäne (Code vs Betrieb, Balken).
-3. **KPI-Reihe** — 4 Tiles mit großer Ink-Zahl, Status-Dot, Caption, Mini-Meter und Beleg (`.src`).
-4. **Charts** — 1–2 horizontale Balken-Charts (z. B. Bus-Faktor Commits/Autor, Branch-Alter), Daten-Hue kühl, direkte Werte.
+2. **Kurzfazit — Stärken UND Schwächen, immer zuerst:** zwei Karten nebeneinander (`.fazit.pos` grün / `.fazit.neg` rot), je 2–3 Bullets mit Fundstellen-Anker. Die Stärken werden **nicht** ans Ende vergraben.
+3. **Bewertung nach Prinzip** — eine Zeile je Prinzip (**Clean Code · Clean Architecture & Design · Testing & Qualität · DevOps & Betrieb · Security · Wartbarkeit & Wissen**): Name · Ordinal-Meter (4 Stufen) · Rating-Wort (stark/solide/lückenhaft/riskant/kritisch) · einzeilige, verankerte Begründung. Farbe = Status der Einstufung (good/warning/serious/critical). Irrelevante Prinzipien weglassen.
+4. **Kennzahlen** — Severity-Verteilung (stacked bar + Legende) neben Findings-nach-Domäne; darunter KPI-Reihe (4 Tiles: Ink-Zahl, Status-Dot, Meter, Beleg) und 1–2 Balken-Charts (Bus-Faktor, Branch-Alter), Daten-Hue kühl.
 5. **Überblick** — System-Landkarte + Datenfluss (`<pre>`), knapp.
 6. **Findings** — Tiers Blocker→Nit, je Fund: Severity-Pill + Titel + `.beleg`-Inset + **Warum → Vorschlag** (Run-in-Labels).
-7. **Was gut ist** — good-Akzent, konkret, mit Fundstelle.
-8. **Footer** — Meta + gh-Fallback-Fußnote (falls zutreffend).
+7. **Footer** — Meta + gh-Fallback-Fußnote (falls zutreffend).
+
+*(Die Stärken leben im Kurzfazit oben — keine separate „Was gut ist"-Sektion am Ende mehr.)*
 
 ## Skelett (Kernstruktur — vollständiges CSS in einer gerenderten Beispieldatei; anpassen, nicht sklavisch kopieren)
 
@@ -69,8 +72,10 @@ Status:  --critical:#d03b3b  --serious:#ec835a  --warning:#fab219  --good:#0ca30
   body{font-family:var(--sans);background:var(--plane);color:var(--ink);font-size:16px;line-height:1.55}
   .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
   .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:0 1px 2px rgba(11,11,11,.04),0 12px 28px -22px rgba(11,11,11,.35)}
-  .grid{display:grid;gap:16px} .g-kpi{grid-template-columns:repeat(4,1fr)} .g-charts,.g-summary{grid-template-columns:1fr 1fr}
-  @media(max-width:900px){.g-charts,.g-summary{grid-template-columns:1fr}.g-kpi{grid-template-columns:repeat(2,1fr)}}
+  .grid{display:grid;gap:16px} .g-kpi{grid-template-columns:repeat(4,1fr)} .g-charts,.g-summary,.g-fazit{grid-template-columns:1fr 1fr}
+  @media(max-width:900px){.g-charts,.g-summary,.g-fazit{grid-template-columns:1fr}.g-kpi{grid-template-columns:repeat(2,1fr)}}
+  /* .fazit.pos/.neg: Karte mit ✓/!-Kopf, Bullet-Liste, .a = mono Fundstellen-Anker */
+  /* .dimrow: name | .dmeter (4× <i>, i.on{background:currentColor}) | .drate | Begründung+.a; Farbe via .r-good/.r-warn/.r-ser/.r-crit auf der Zeile */
   /* KPI-Tile: .val (Ink, tabular-nums, groß) · .dot (Status) · .meter · .src (mono Beleg) */
   /* stacked severity bar: flex, 2px gap, runde Enden, Count im Segment, Legende darunter */
   /* Magnitude-Balken: track + fill (var(--data)); Wert rechts (tabular-nums) */
@@ -86,13 +91,31 @@ Status:  --critical:#d03b3b  --serious:#ec835a  --warning:#fab219  --good:#0ca30
     <div class="meta"><span>Stand · <b>…</b></span><span>Scope · <b>…</b></span><span>Kalibrierung · <b>…</b></span></div>
   </header>
 
+  <!-- 2. KURZFAZIT: immer zuerst, positiv UND negativ -->
+  <div class="grid g-fazit">
+    <div class="card fazit pos"><h3><span class="ic">✓</span>Stärken</h3>
+      <ul><li>…Stärke… <span class="a">datei:zeile</span></li></ul></div>
+    <div class="card fazit neg"><h3><span class="ic">!</span>Schwächen &amp; Risiken</h3>
+      <ul><li>…Risiko… <span class="a">datei:zeile</span></li></ul></div>
+  </div>
+
+  <!-- 3. BEWERTUNG NACH PRINZIP -->
+  <section><div class="sec-title"><span class="n">✦</span>Bewertung nach Prinzip</div>
+    <div class="card dims">
+      <div class="dimrow r-ser"><span class="dn">Clean Code</span>
+        <span class="dmeter"><i class="on"></i><i class="on"></i><i></i><i></i></span>
+        <span class="drate">Riskant</span>
+        <span class="dr">…einzeilige Begründung… <span class="a">datei:zeile</span></span></div>
+      <!-- weitere Zeilen: Clean Architecture & Design · Testing & Qualität · DevOps & Betrieb · Security · Wartbarkeit & Wissen -->
+    </div></section>
+
+  <!-- 4. KENNZAHLEN -->
+  <section><div class="sec-title"><span class="n">✦</span>Kennzahlen</div></section>
   <div class="grid g-summary">
     <div class="card"><!-- Severity-Verteilung: sevbar (Segmente je Tier, Count) + Legende --></div>
     <div class="card"><!-- Findings nach Domäne: Code/Betrieb Balken --></div>
   </div>
-
   <div class="grid g-kpi"><!-- 4× .kpi: .top(dot+label) .val(Ink-Zahl) .cap .meter .src(Beleg) --></div>
-
   <div class="grid g-charts">
     <div class="card"><!-- Bus-Faktor: barrow × N (nm | track>fill(data) | wert) + Beleg --></div>
     <div class="card"><!-- Branch-Alter o.ä. --></div>
@@ -109,9 +132,6 @@ Status:  --critical:#d03b3b  --serious:#ec835a  --warning:#fab219  --good:#0ca30
       <p class="rat"><b>Warum</b> … <b>Vorschlag</b> …</p></article>
     <!-- Tiers weiter: f-ser/p-ser · f-warn/p-warn · f-nit/p-nit -->
   </section>
-
-  <section id="gut"><div class="sec-title"><span class="n">03</span>Was gut ist</div>
-    <div class="gut-grid"><div class="gut"><h4>…</h4><p>…</p><div class="loc">datei:zeile</div></div></div></section>
 
   <footer><p class="foot-top"><b>&lt;PROJEKT&gt; — Roast</b> · erzeugt mit roast-this</p>
     <div class="footnote"><b>gh-Fallback:</b> …falls zutreffend…</div></footer>

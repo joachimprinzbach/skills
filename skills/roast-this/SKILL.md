@@ -54,7 +54,8 @@ Du unterdrückst die **Einzel-Synthese** der Sub-Skills — du nutzt nur ihre Fi
 - **Final kalibrieren** gegen die Regler — nicht gegen ein Ideal.
 - **Ehrlich priorisieren über beide Domänen** in **eine** Rangfolge. Führe mit den zwei, drei Dingen, die wirklich zählen.
 - **Signal-Deckel (nicht verhandelbar).** Kein urteilender Tier — vor allem „Sollte behoben werden" — trägt mehr als **~5 flache Einträge**. Wird er länger, ist das kein Zeichen von Gründlichkeit, sondern von fehlender Disziplin: dann **gruppieren statt auflisten**. Bündle verwandte Funde zu *einem* Thema mit einem Titel (z. B. „CI-Hygiene: `adopt`-EOL + kein PR-Merge-Gate + falscher Branch-Filter" als ein Eintrag, die Fundstellen darunter), und schieb die schwächsten nach unten oder falte sie in einen kompakten „weitere Punkte"-Sammeleintrag. Faustregel: Ein Report, in dem neun gleichgewichtige Punkte um Aufmerksamkeit kämpfen, hat kein Signal mehr — nur eine Liste. Deckle, bündle, führe.
-- **Benenne, was *gut* ist** — ehrlich und konkret.
+- **Kurzfazit: Stärken UND Schwächen, high-level, immer zuerst.** Verdichte das Urteil in ein, zwei Stärken *und* ein, zwei Schwächen/Risiken — beides gleichrangig, ganz oben. Die guten Muster werden nicht ans Ende vergraben; sie stehen neben den Risiken.
+- **Bewertung nach Prinzip.** Verdichte die Findings zu einer High-Level-Einstufung je Prinzip — **Clean Code · Clean Architecture & Design · Testing & Qualität · DevOps & Betrieb · Security · Wartbarkeit & Wissen** — je eine Band-Einstufung (stark / solide / lückenhaft / riskant / kritisch) mit einer **einzeiligen, an Fundstellen verankerten** Begründung. Das ist ein *Urteil, kein erfundener Score*: die Einstufung fasst die geerdeten Findings der jeweiligen Domäne zusammen. Irrelevante Prinzipien (z. B. Frontend bei einer reinen Bibliothek) weglassen.
 - Bei Plattform-Scope: Plattform-weite Themen **und** Repo-spezifische Fundstellen unterscheiden.
 - **Eine Stimme, ein Verdikt** — die Finder dürfen unterschiedlich geklungen haben; die Ausgabe klingt einheitlich nach Joachim.
 
@@ -80,7 +81,16 @@ Das Deliverable sagt offen, welche Betriebs-Signale aus lokalem git stammen und 
 
 ## Ausgabeformat
 
-Default ist die **HTML-Seite** (siehe `references/report-template.md`) mit: Verdikt → Overview/Landkarte (Intro) → Scorecard → priorisierte Tiers Blocker→Nit → „Was gut ist". Jeder Fund nach dem Muster **Was** (mit Beleg — `datei:zeile` bei Code, gh-/git-Ausgabe beim Betrieb) → **Warum** (Prinzip, Domäne) → **Vorschlag** (konkret, umsetzbar). Wenn der Nutzer ausdrücklich Prosa im Chat will, gib dieselbe Struktur als Markdown aus.
+Default ist die **HTML-Seite** (siehe `references/report-template.md`). Der Bericht **öffnet IMMER mit der High-Level-Bewertung, erst danach die konkreten Findings** — in dieser Reihenfolge:
+
+1. **Verdikt** — 1–2 ehrliche Sätze mit der Kernaussage (Humor erlaubt; Dringendes unmissverständlich).
+2. **Kurzfazit — Stärken *und* Schwächen**, high-level, direkt nebeneinander. Beides, immer, ganz oben — nie die Stärken ans Ende vergraben.
+3. **Bewertung nach Prinzip** — Clean Code · Clean Architecture & Design · Testing & Qualität · DevOps & Betrieb · Security · Wartbarkeit & Wissen, je Einstufung + verankerte Begründung.
+4. **Kennzahlen** — Severity-Verteilung, KPIs, kleine Charts (geerdet).
+5. **Überblick** — System-Landkarte (Intro).
+6. **Findings** — die konkreten Funde, priorisierte Tiers Blocker → Nit.
+
+Jeder Fund nach dem Muster **Was** (mit Beleg — `datei:zeile` bei Code, gh-/git-Ausgabe beim Betrieb) → **Warum** (Prinzip, Domäne) → **Vorschlag** (konkret, umsetzbar). Wenn der Nutzer ausdrücklich Prosa im Chat will, gib dieselbe Reihenfolge als Markdown aus.
 
 ### Harte Leitplanke: keine unbelegten Aussagen
 
